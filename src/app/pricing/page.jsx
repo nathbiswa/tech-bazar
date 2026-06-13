@@ -18,7 +18,7 @@ export default function SellerPricingPage() {
     },
     {
       name: "Professional Seller",
-      price: "৳14",
+      price: "$14",
       period: "/month",
       description: "For growing businesses that need more visibility.",
       features: [
@@ -76,9 +76,7 @@ export default function SellerPricingPage() {
             <div
               key={plan.name}
               className={`relative rounded-3xl border bg-white p-8 shadow-sm transition-all hover:shadow-xl ${
-                plan.popular
-                  ? "border-primary ring-2 ring-primary/20"
-                  : ""
+                plan.popular ? "border-primary ring-2 ring-primary/20" : ""
               }`}
             >
               {plan.popular && (
@@ -89,9 +87,7 @@ export default function SellerPricingPage() {
 
               <h3 className="text-2xl font-bold">{plan.name}</h3>
 
-              <p className="mt-3 text-muted-foreground">
-                {plan.description}
-              </p>
+              <p className="mt-3 text-muted-foreground">{plan.description}</p>
 
               <div className="mt-8">
                 <span className="text-5xl font-bold">{plan.price}</span>
@@ -100,10 +96,7 @@ export default function SellerPricingPage() {
 
               <ul className="mt-8 space-y-4">
                 {plan.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-3 text-sm"
-                  >
+                  <li key={feature} className="flex items-center gap-3 text-sm">
                     <svg
                       className="h-5 w-5 shrink-0"
                       fill="none"
@@ -122,17 +115,15 @@ export default function SellerPricingPage() {
                 ))}
               </ul>
 
-              <Button
-                className={`mt-8 w-full  font-medium ${
-                  plan.popular
-                    ? "bg-primary"
-                    : "border hover:bg-muted"
-                }`}
-              >
-                {plan.name === "Enterprise Seller"
-                  ? "Contact Sales"
-                  : "Become a Seller"}
-              </Button>
+              {plan.name === "Enterprise Seller" ? (
+                <Button
+                  className={`mt-8 w-full  font-medium`}
+                >Contact Sales</Button>
+              ) : (
+                <Button
+                  className={`mt-8 w-full  font-medium`}
+                >Become Seller</Button>
+              )}
             </div>
           ))}
         </div>
@@ -141,9 +132,7 @@ export default function SellerPricingPage() {
       {/* Features */}
       <section className="border-t bg-white">
         <div className="mx-auto max-w-7xl px-4 py-20">
-          <h2 className="text-center text-3xl font-bold">
-            Why Sell With Us?
-          </h2>
+          <h2 className="text-center text-3xl font-bold">Why Sell With Us?</h2>
 
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl border p-6">
@@ -180,9 +169,7 @@ export default function SellerPricingPage() {
       {/* CTA */}
       <section className="mx-auto max-w-5xl px-4 py-20">
         <div className="rounded-3xl border bg-linear-to-r from-primary/10 to-primary/5 p-10 text-center">
-          <h2 className="text-3xl font-bold">
-            Ready to Start Selling?
-          </h2>
+          <h2 className="text-3xl font-bold">Ready to Start Selling?</h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Join our marketplace today and start growing your online business.
