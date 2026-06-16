@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
@@ -14,6 +15,11 @@ const Navbar = () => {
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
+
+  const pathname = usePathname();
+  if (pathname.includes('dashboard')) {
+    return null;
+  }
 
 
   const handleSignOut = async () => {
@@ -88,7 +94,7 @@ const Navbar = () => {
               <Link href="/pricing">Pricing</Link>
             </li>
           </ul>
-         {!user && (
+          {!user && (
             <div className="hidden items-center gap-4 md:flex">
               <Link href="/signin">Login</Link>
               <Link href="/signup">
@@ -135,8 +141,8 @@ const Navbar = () => {
                         className="flex items-center gap-2"
                         href={`/dashboard/${user?.role}`}
                       > */}
-                        <MdDashboard />
-                        <Label>Dashboard</Label>
+                      <MdDashboard />
+                      <Label>Dashboard</Label>
                       {/* </Link> */}
                     </Dropdown.Item>
 
