@@ -1,23 +1,89 @@
 
-import { Bars, Bell, Envelope, Gear, House, Magnifier, Person } from "@gravity-ui/icons";
+import { auth } from "@/lib/auth";
+import { Bars, Bell, CloudGear, Envelope, Gear, House, Magnifier, Person } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
+import { headers } from "next/headers";
+import Image from "next/image";
 
-export function DashboardSibebar() {
-    const navItems = [
-        { icon: House, label: "Home" },
-        { icon: Magnifier, label: "Search" },
-        { icon: Bell, label: "Notifications" },
-        { icon: Envelope, label: "Messages" },
-        { icon: Person, label: "Profile" },
-        { icon: Gear, label: "Settings" },
-    ];
+export async function DashboardSibebar() {
+
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    const user = session?.user;
+    const role = session?.role || "buyer";
+
+    const dashboardItems = {
+        buyer: [
+            { icon: House, label: "Buyer", link: "/dashboard/buyer" },
+            { icon: Magnifier, label: "Search" },
+            { icon: Bell, label: "Notifications" },
+            { icon: Envelope, label: "Messages" },
+            { icon: Person, label: "Profile" },
+            { icon: Gear, label: "Settings" },
+        ],
+        seller: [
+            { icon: House, label: "Seller" },
+            { icon: Magnifier, label: "Search" },
+            { icon: Bell, label: "Notifications" },
+            { icon: Envelope, label: "Messages" },
+            { icon: Person, label: "Profile" },
+            { icon: Gear, label: "Settings" },
+        ],
+        admin: [
+            { icon: House, label: "Admin" },
+            { icon: Magnifier, label: "Search" },
+            { icon: Bell, label: "Notifications" },
+            { icon: Envelope, label: "Messages" },
+            { icon: Person, label: "Profile" },
+            { icon: Gear, label: "Settings" },
+        ]
+    };
+
+    const navItems = dashboardItems[role];
+
+
+
+
+
+
+    // const navItems = [
+    //     { icon: House, label: "Home" },
+    //     { icon: Magnifier, label: "Search" },
+    //     { icon: Bell, label: "Notifications" },
+    //     { icon: Envelope, label: "Messages" },
+    //     { icon: Person, label: "Profile" },
+    //     { icon: Gear, label: "Settings" },
+    // ];
 
     return (
         <Drawer>
-            <Button variant="secondary">
+            <Button variant="secondary" className='block md:hidden'>
                 <Bars />
                 Menu
             </Button>
+            <nav className="flex flex-col gap-1 w-[300px] border border-right-2">
+
+                <Image
+                    src={'/logo-xl.png'} alt="Logo"
+                    width={50}
+                    height={50}
+                    className=" h-10 w-full"
+                />
+
+                {navItems.map((item) => (
+                    <button
+                        key={item.label}
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                        type="button"
+                    >
+                        <item.icon className="size-5 text-muted" />
+                        {item.label}
+                    </button>
+                ))}
+            </nav>
+
             <Drawer.Backdrop>
                 <Drawer.Content placement="left">
                     <Drawer.Dialog>
