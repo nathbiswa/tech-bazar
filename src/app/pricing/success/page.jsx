@@ -1,6 +1,8 @@
 import { stripe } from '@/lib/stripe'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { subscriptions } from '@/lib/actions/payment';
+
 
 export default async function Success({ searchParams }) {
     const { session_id } = await searchParams
@@ -10,6 +12,7 @@ export default async function Success({ searchParams }) {
 
     const {
         status,
+        metadata,
         customer_details: { email: customerEmail }
     } = await stripe.checkout.sessions.retrieve(session_id, {
         expand: ['line_items', 'payment_intent']
@@ -18,6 +21,9 @@ export default async function Success({ searchParams }) {
     if (status === 'open') {
         return redirect('/')
     }
+
+    await subscriptions({ ...metadata, sessionId: session_id })
+    console.log("metadata", metadata)
 
     if (status === 'complete') {
         return (

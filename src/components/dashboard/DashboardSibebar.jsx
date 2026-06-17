@@ -4,6 +4,7 @@ import { Bars, Bell, CloudGear, Envelope, Gear, House, Magnifier, Person } from 
 import { Button, Drawer } from "@heroui/react";
 import { headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
 
 
 export async function DashboardSibebar() {
@@ -13,23 +14,17 @@ export async function DashboardSibebar() {
     })
 
     const user = session?.user;
-    // console.log("user", user);
-    // const role = session?.role;
-    // console.log('role', role)
 
     const dashboardItems = {
         buyer: [
             { icon: House, label: "Buyer", link: "/dashboard/buyer" },
             { icon: Magnifier, label: "Buy Information", link: "/dashboard/produclist" },
-            { icon: Bell, label: "Buyer Reasiction", link: '/dashboard/transiction' },
+            { icon: Bell, label: "Buyer transiction", link: '/dashboard/transiction' },
         ],
         seller: [
             { icon: House, label: "Seller", link: "/dashboard/seller" },
-            { icon: Magnifier, label: "Products", link: '/dashboard/products' },
-            { icon: Bell, label: "Notifications" },
-            { icon: Envelope, label: "Messages" },
-            { icon: Person, label: "Profile" },
-            { icon: Gear, label: "Settings" },
+            { icon: Magnifier, label: "Products", link: '/dashboard/seller/products' },
+            { icon: Bell, label: "transiction", link: "/dashboard/seller/transiction" },
         ],
         admin: [
             { icon: House, label: "Admin", link: "/dashboard/admin" },
@@ -68,14 +63,17 @@ export async function DashboardSibebar() {
                 />
 
                 {navItems.map((item) => (
-                    <button
-                        key={item.label}
-                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
-                        type="button"
-                    >
-                        <item.icon className="size-5 text-muted" />
-                        {item.label}
-                    </button>
+                    <Link key={item.label} href={item.link}>
+                        <button
+                            key={item.label}
+                            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                            type="button"
+                        >
+                            <item.icon className="size-5 text-muted" />
+                            {item.label}
+                        </button>
+                    </Link>
+
                 ))}
             </nav>
 
@@ -87,8 +85,8 @@ export async function DashboardSibebar() {
                             <Drawer.Heading>Navigation</Drawer.Heading>
                         </Drawer.Header>
                         <Drawer.Body>
-                            <nav className="flex flex-col gap-1">
-                                {navItems.map((item) => (
+                            {navItems.map((item) => (
+                                <Link key={item.label} href={item.link}>
                                     <button
                                         key={item.label}
                                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
@@ -97,8 +95,9 @@ export async function DashboardSibebar() {
                                         <item.icon className="size-5 text-muted" />
                                         {item.label}
                                     </button>
-                                ))}
-                            </nav>
+                                </Link>
+
+                            ))}
                         </Drawer.Body>
                     </Drawer.Dialog>
                 </Drawer.Content>
