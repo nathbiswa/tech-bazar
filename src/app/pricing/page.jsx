@@ -1,4 +1,4 @@
-import { Button } from "@heroui/react";
+import { Button, Form } from "@heroui/react";
 
 export default function SellerPricingPage() {
   const plans = [
@@ -75,9 +75,8 @@ export default function SellerPricingPage() {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-3xl border bg-white p-8 shadow-sm transition-all hover:shadow-xl ${
-                plan.popular ? "border-primary ring-2 ring-primary/20" : ""
-              }`}
+              className={`relative rounded-3xl border bg-white p-8 shadow-sm transition-all hover:shadow-xl ${plan.popular ? "border-primary ring-2 ring-primary/20" : ""
+                }`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-red-500 px-4 py-1 text-sm font-medium text-primary-foreground">
@@ -120,9 +119,13 @@ export default function SellerPricingPage() {
                   className={`mt-8 w-full  font-medium`}
                 >Contact Sales</Button>
               ) : (
-                <Button
-                  className={`mt-8 w-full  font-medium`}
-                >Become Seller</Button>
+
+                <Form action={'/api/subscription'} method="POST">
+                  <Button type="submit"
+                    className={`mt-8 w-full  font-medium`}
+                  >Become Seller</Button>
+                </Form>
+
               )}
             </div>
           ))}

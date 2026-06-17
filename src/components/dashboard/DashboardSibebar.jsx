@@ -5,6 +5,7 @@ import { Button, Drawer } from "@heroui/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 
+
 export async function DashboardSibebar() {
 
     const session = await auth.api.getSession({
@@ -12,27 +13,26 @@ export async function DashboardSibebar() {
     })
 
     const user = session?.user;
-    const role = session?.role || "buyer";
+    // console.log("user", user);
+    // const role = session?.role;
+    // console.log('role', role)
 
     const dashboardItems = {
         buyer: [
             { icon: House, label: "Buyer", link: "/dashboard/buyer" },
-            { icon: Magnifier, label: "Search" },
-            { icon: Bell, label: "Notifications" },
-            { icon: Envelope, label: "Messages" },
-            { icon: Person, label: "Profile" },
-            { icon: Gear, label: "Settings" },
+            { icon: Magnifier, label: "Buy Information", link: "/dashboard/produclist" },
+            { icon: Bell, label: "Buyer Reasiction", link: '/dashboard/transiction' },
         ],
         seller: [
-            { icon: House, label: "Seller" },
-            { icon: Magnifier, label: "Search" },
+            { icon: House, label: "Seller", link: "/dashboard/seller" },
+            { icon: Magnifier, label: "Products", link: '/dashboard/products' },
             { icon: Bell, label: "Notifications" },
             { icon: Envelope, label: "Messages" },
             { icon: Person, label: "Profile" },
             { icon: Gear, label: "Settings" },
         ],
         admin: [
-            { icon: House, label: "Admin" },
+            { icon: House, label: "Admin", link: "/dashboard/admin" },
             { icon: Magnifier, label: "Search" },
             { icon: Bell, label: "Notifications" },
             { icon: Envelope, label: "Messages" },
@@ -41,12 +41,7 @@ export async function DashboardSibebar() {
         ]
     };
 
-    const navItems = dashboardItems[role];
-
-
-
-
-
+    const navItems = dashboardItems[user?.role];
 
     // const navItems = [
     //     { icon: House, label: "Home" },
